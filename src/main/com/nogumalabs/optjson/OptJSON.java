@@ -19,9 +19,13 @@ public class OptJSON {
         } else if (rawValue instanceof Double) {
             return new OptJSONDouble((Double)rawValue);
         } else if (rawValue instanceof Long) {
-            return new OptJSONLong((Long)rawValue);
+            return new OptJSONLong((Long) rawValue);
+        } else if (rawValue instanceof Integer) {
+            return new OptJSONLong(((Integer) rawValue).longValue());
         } else if (rawValue instanceof Boolean) {
-            return new OptJSONBoolean((Boolean)rawValue);
+            return new OptJSONBoolean((Boolean) rawValue);
+        } else if (rawValue instanceof String) {
+            return new OptJSONString((String) rawValue);
         } else if (rawValue.equals(null)) {
             return new OptJSONNull();
         } else {

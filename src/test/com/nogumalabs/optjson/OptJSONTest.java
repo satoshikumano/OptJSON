@@ -28,4 +28,16 @@ public class OptJSONTest {
         });
     }
 
+    @Test
+    public void arrayTest1() throws Exception {
+        String jsonStr = "[1,2,3,4,5]";
+
+        OptJSON json = OptJSON.parse(jsonStr);
+        assertEquals(5, json.ifArray().get().stream().count());
+        long result = json.ifArray().get().stream().reduce(
+                0L,
+                (total, elm) -> total + elm.ifLong().get().longValue(),
+                (total1, total2) -> total1 + total2);
+        assertEquals(15L, result);
+    }
 }
