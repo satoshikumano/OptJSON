@@ -40,4 +40,19 @@ public class OptJSONTest {
                 (total1, total2) -> total1 + total2);
         assertEquals(15L, result);
     }
+
+    @Test
+    public void arrayTest2() throws Exception {
+        String jsonStr = "[1,2,3,4,\"5\"]";
+
+        OptJSON json = OptJSON.parse(jsonStr);
+        assertEquals(5, json.ifArray().get().stream().count());
+        long result = json.ifArray().get().stream().reduce(
+                0L,
+                (total, elm) -> {
+                    return  elm.ifLong().map(aLong -> aLong + total).orElse(total);
+                },
+                (total1, total2) -> total1 + total2);
+        assertEquals(10L, result);
+    }
 }
