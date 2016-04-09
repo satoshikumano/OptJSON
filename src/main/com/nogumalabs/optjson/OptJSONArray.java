@@ -3,6 +3,7 @@ package com.nogumalabs.optjson;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -27,16 +28,16 @@ public class OptJSONArray extends OptJSON {
         return Optional.empty();
     }
 
-    public Stream<OptJSON> stream() {
-        Stream.Builder b = Stream.builder();
+    public ArrayList<OptJSON> toArrayList() {
+        ArrayList<OptJSON> l = new ArrayList<OptJSON>();
         for (int i=0; i<rawValue.length(); i++) {
             try {
-                b.add(OptJSON.fromRawValue(rawValue.get(i)));
+                l.add(OptJSON.fromRawValue(rawValue.get(i)));
             } catch (OptJSONException e) {
             } catch (JSONException e) {
             }
         }
-        return b.build();
+        return l;
     }
 
 }

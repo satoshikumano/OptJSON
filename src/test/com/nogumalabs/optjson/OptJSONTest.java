@@ -33,8 +33,8 @@ public class OptJSONTest {
         String jsonStr = "[1,2,3,4,5]";
 
         OptJSON json = OptJSON.parse(jsonStr);
-        assertEquals(5, json.ifArray().get().stream().count());
-        long result = json.ifArray().get().stream().reduce(
+        assertEquals(5, json.ifArray().get().toArrayList().size());
+        long result = json.ifArray().get().toArrayList().stream().reduce(
                 0L,
                 (total, elm) -> total + elm.ifLong().get().longValue(),
                 (total1, total2) -> total1 + total2);
@@ -46,8 +46,8 @@ public class OptJSONTest {
         String jsonStr = "[1,2,3,4,\"5\"]";
 
         OptJSON json = OptJSON.parse(jsonStr);
-        assertEquals(5, json.ifArray().get().stream().count());
-        long result = json.ifArray().get().stream().reduce(
+        assertEquals(5, json.ifArray().get().toArrayList().size());
+        long result = json.ifArray().get().toArrayList().stream().reduce(
                 0L,
                 (total, elm) -> {
                     return  elm.ifLong().map(aLong -> aLong + total).orElse(total);
