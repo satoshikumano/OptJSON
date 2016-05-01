@@ -1,5 +1,6 @@
 package com.nogumalabs.optjson;
 
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,24 @@ public class OptJSONTest {
         });
     }
 
+    @Test
+    public void objectTest() throws Exception {
+        JSONObject obj = new JSONObject();
+        obj.put("numberA", 1);
+        obj.put("numberB", 2);
+        obj.put("strA", "1");
+        OptJSON optJSON = OptJSONObject.parse(obj.toString());
+        optJSON.ifObject().ifPresent((consumer) -> {
+            consumer.ifObject().ifPresent((jobj) -> {
+                long result = jobj.entrySet().stream().filter((predicate) -> {
+                    return predicate.getKey().startsWith("number");
+                }).reduce(0L,
+                        (total, ent) -> total + ent.getValue().ifLong().get().longValue(),
+                        (t1, t2) ->t1+t2);
+                assertEquals(3, result);
+            });
+        });
+    }
     @Test
     public void arrayTest1() throws Exception {
         String jsonStr = "[1,2,3,4,5]";
